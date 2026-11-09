@@ -11,11 +11,11 @@ jobs:
       with:
         java-version: '17'
         distribution: 'zulu'
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v4
-    - name: Build with Gradle
-      run: ./gradlew assembleDebug
+    - name: Change to app directory and Build
+      run: |
+        cd app || true
+        if [ -f gradlew ]; then chmod +x gradlew && ./gradlew assembleDebug; else gradle assembleDebug; fi
     - uses: actions/upload-artifact@v4
       with:
         name: Hotel-App-APK
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: "**/build/outputs/apk/debug/*.apk"
